@@ -1,9 +1,7 @@
-terminal.js-webshell
+Gospel Terminal Socket
 ====================
 
-this is a demo application for [child_pty](https://github.com/Gottox/child_pty) and [terminal.js](https://github.com/Gottox/terminal.js).
-
-running this demo
+running this
 -----------------
 
 ```
@@ -11,6 +9,5 @@ npm install
 npm start
 ```
 
-Then point your browser to http://127.0.0.1:3000
+Then use http://0.0.0.0:3000 in your client
 
-![Demo](https://raw.githubusercontent.com/Gottox/terminal.js-webshell/master/demo.gif)
