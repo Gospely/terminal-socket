@@ -20,6 +20,7 @@
     /*
      * Require.js is available
      */
+    fullscreen(window.Terminal);
     define(['../../dist/xterm'], fullscreen);
   } else {
     /*

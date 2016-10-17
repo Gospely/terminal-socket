@@ -8,6 +8,7 @@
     /*
      * Require.js is available
      */
+    linkify(window.Terminal);
     define(['../../dist/xterm'], linkify);
   } else {
     /*

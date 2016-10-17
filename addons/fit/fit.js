@@ -21,6 +21,7 @@
     /*
      * Require.js is available
      */
+    fit(window.Terminal);
     define(['../../dist/xterm'], fit);
   } else {
     /*
