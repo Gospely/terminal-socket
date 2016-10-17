@@ -17,7 +17,7 @@
     /*
      * Require.js is available
      */
-    console.log('Require.js', window.Terminal);
+    console.log('Require.js', window.Terminal, attach);
     define(['../../dist/xterm'], attach);
   } else {
     /*
