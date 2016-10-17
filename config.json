@@ -1,5 +1,0 @@
-{
-	"login": "echo \"欢迎使用Gospely IDE终端\"; /bin/sh",
-	"port": 3000,
-	"interface": "0.0.0.0"
-}
