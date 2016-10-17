@@ -21,6 +21,7 @@
     /*
      * Plain browser environment
      */
+     console.log('Plain browser', window.Terminal);
     attach(window.Terminal);
   }
 })(function (Xterm) {
