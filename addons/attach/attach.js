@@ -11,19 +11,17 @@
     /*
      * CommonJS environment
      */
-    console.log('CommonJS');
     module.exports = attach(require('../../dist/xterm'));
   } else if (typeof define == 'function') {
     /*
      * Require.js is available
      */
-    console.log('Require.js', window.Terminal, attach);
+    attach(window.Terminal);
     define(['../../dist/xterm'], attach);
   } else {
     /*
      * Plain browser environment
      */
-    console.log('Plain browser', window.Terminal);
     attach(window.Terminal);
   }
 })(function (Xterm) {
