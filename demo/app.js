@@ -3,7 +3,7 @@ var app = express();
 var expressWs = require('express-ws')(app);
 var os = require('os');
 var pty = require('pty.js');
-
+var request = require('request');
 var terminals = {},
     logs = {};
 
@@ -17,6 +17,35 @@ app.all('*', function(req, res, next) {
 
 app.use('/build', express.static(__dirname + '/../build'));
 app.use('/addons', express.static(__dirname + '/../addons'));
+app.use(function (req,res,next) {
+    headers = req.headers;
+    authorization = headers.Authorization;
+    if (authorization == null || authorization == "" || authorization == undefined){
+      res.jsonp({
+        code: -1,
+        message :'无权访问!!'
+      })
+    }
+  const options = {
+    url: 'http://api.gospely.com/users/authorization',
+    headers: {
+      'Authorization': authorization
+    }
+  };
+  request(options,function (err,response,body) {
+    if (!err && response.statusCode == 200){
+      res = JSON.parse(body);
+      if (res.code === 1){
+        next()
+      }else {
+        res.jsonp({
+          code: -1,
+          message :'无权访问!!'
+        })
+      }
+    }
+  });
+});
 
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
@@ -29,6 +58,8 @@ app.get('/style.css', function(req, res){
 app.get('/main.js', function(req, res){
   res.sendFile(__dirname + '/main.js');
 });
+
+
 
 app.post('/terminals', function (req, res) {
   var cols = parseInt(req.query.cols),

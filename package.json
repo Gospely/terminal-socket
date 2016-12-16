@@ -32,5 +32,8 @@
     "test": "mocha --recursive --compilers js:babel-core/register",
     "build:docs": "jsdoc -c jsdoc.json",
     "build": "./bin/build"
+  },
+  "dependencies": {
+    "request": "^2.79.0"
   }
 }
