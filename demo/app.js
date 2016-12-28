@@ -23,7 +23,7 @@ app.use(function (req,res,next) {
     if (authorization == null || authorization == "" || authorization == undefined){
       res.jsonp({
         code: -1,
-        message :'无权访问!!'
+        message :'无权访问!!' + authorization
       })
     }
   const options = {
