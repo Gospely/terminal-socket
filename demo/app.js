@@ -31,7 +31,7 @@ app.use(function (req,res,next) {
       })
     }
   const options = {
-    url: 'http://192.168.31.23:9999/users/authorization',
+    url: 'http://api.gospely.com/users/authorization',
     headers: {
       'Authorization': authorization
     }
