@@ -19,37 +19,38 @@ app.use('/build', express.static(__dirname + '/../build'));
 app.use('/addons', express.static(__dirname + '/../addons'));
 app.use(function (req,res,next) {
     
-  if(req.method == 'OPTIONS'){
-    next()
-  }else{
-     headers = req.headers;
-    authorization = headers.authorization;
-    if (authorization == null || authorization == "" || authorization == undefined){
-      res.jsonp({
-        code: -1,
-        message :'无权访问!!' + authorization
-      })
-    }
-  const options = {
-    url: 'http://api.gospely.com/users/authorization',
-    headers: {
-      'Authorization': authorization
-    }
-  };
-  request(options,function (err,response,body) {
-    if (!err && response.statusCode == 200){
-      res = JSON.parse(body);
-      if (res.code === 1){
-        next()
-      }else {
-        res.jsonp({
-          code: -1,
-          message :'无权访问!!'
-        })
-      }
-    }
-  });
-  }
+//   if(req.method == 'OPTIONS'){
+//     next()
+//   }else{
+//      headers = req.headers;
+//     authorization = headers.authorization;
+//     if (authorization == null || authorization == "" || authorization == undefined){
+//       res.jsonp({
+//         code: -1,
+//         message :'无权访问!!' + authorization
+//       })
+//     }
+//   const options = {
+//     url: 'http://api.gospely.com/users/authorization',
+//     headers: {
+//       'Authorization': authorization
+//     }
+//   };
+//   request(options,function (err,response,body) {
+//     if (!err && response.statusCode == 200){
+//       res = JSON.parse(body);
+//       if (res.code === 1){
+//         next()
+//       }else {
+//         res.jsonp({
+//           code: -1,
+//           message :'无权访问!!'
+//         })
+//       }
+//     }
+//   });
+//   }
+  next();
 });
 
 app.get('/', function(req, res){
