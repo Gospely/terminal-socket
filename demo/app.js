@@ -18,7 +18,11 @@ app.all('*', function(req, res, next) {
 app.use('/build', express.static(__dirname + '/../build'));
 app.use('/addons', express.static(__dirname + '/../addons'));
 app.use(function (req,res,next) {
-    headers = req.headers;
+    
+  if(req.method == 'OPTIONS'){
+    next()
+  }else{
+     headers = req.headers;
     authorization = headers.authorization;
     if (authorization == null || authorization == "" || authorization == undefined){
       res.jsonp({
@@ -45,6 +49,7 @@ app.use(function (req,res,next) {
       }
     }
   });
+  }
 });
 
 app.get('/', function(req, res){
