@@ -68,24 +68,55 @@ app.get('/main.js', function(req, res){
 
 
 app.post('/terminals', function (req, res) {
-  var cols = parseInt(req.query.cols),
-      rows = parseInt(req.query.rows),
-      term = pty.spawn(process.platform === 'win32' ? 'cmd.exe' : 'bash', [], {
-        name: 'xterm-color',
-        cols: cols || 80,
-        rows: rows || 24,
-        cwd: process.env.PWD,
-        env: process.env
-      });
+  
+    if(req.method == 'OPTIONS'){
+    next()
+  }else{
+     headers = req.headers;
+    authorization = headers.authorization;
+    if (authorization == null || authorization == "" || authorization == undefined){
+      res.jsonp({
+        code: -1,
+        message :'无权访问!!' + authorization
+      })
+    }
+  const options = {
+    url: 'http://api.gospely.com/users/authorization',
+    headers: {
+      'Authorization': authorization
+    }
+  };
+  request(options,function (err,response,body) {
+    if (!err && response.statusCode == 200){
+      dat = JSON.parse(body);
+      if (data.code === 1){
+          var cols = parseInt(req.query.cols),
+          rows = parseInt(req.query.rows),
+          term = pty.spawn(process.platform === 'win32' ? 'cmd.exe' : 'bash', [], {
+            name: 'xterm-color',
+            cols: cols || 80,
+            rows: rows || 24,
+            cwd: process.env.PWD,
+            env: process.env
+          });
 
-  console.log('Created terminal with PID: ' + term.pid);
-  terminals[term.pid] = term;
-  logs[term.pid] = '';
-  term.on('data', function(data) {
-    logs[term.pid] += data;
+          console.log('Created terminal with PID: ' + term.pid);
+          terminals[term.pid] = term;
+          logs[term.pid] = '';
+          term.on('data', function(data) {
+            logs[term.pid] += data;
+          });
+          res.send(term.pid.toString());
+          res.end();
+      }else {
+        res.jsonp({
+          code: -1,
+          message :'无权访问!!'
+        })
+      }
+    }
   });
-  res.send(term.pid.toString());
-  res.end();
+  }
 });
 
 app.post('/terminals/:pid/size', function (req, res) {
