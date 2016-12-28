@@ -20,7 +20,6 @@ app.use('/addons', express.static(__dirname + '/../addons'));
 app.use(function (req,res,next) {
     headers = req.headers;
     authorization = headers.authorization;
-    console.log(authorization);
     if (authorization == null || authorization == "" || authorization == undefined){
       res.jsonp({
         code: -1,
